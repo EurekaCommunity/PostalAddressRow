@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="142" id="ZGc-Q2-z6J" customClass="PostalAddressCell" customModule="PostalAddressRow" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZGc-Q2-z6J" id="WPE-jg-X35">
+                <frame key="frameInset" width="375" height="119"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o5S-WV-gmI">
+                        <nil key="textColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxA-BK-d42">
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="TdQ-t3-lW8"/>
+                        </constraints>
+                    </view>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DdI-zm-cRt">
+                        <nil key="textColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wb4-F5-tW5">
+                        <nil key="textColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WKJ-zQ-8R6">
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="BdP-Sq-c1v"/>
+                        </constraints>
+                    </view>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pdn-aV-W4Q">
+                        <nil key="textColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lu6-hl-9pm">
+                        <nil key="textColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="zxA-BK-d42" firstAttribute="top" secondItem="o5S-WV-gmI" secondAttribute="bottom" id="3m8-71-U9I"/>
+                    <constraint firstItem="DdI-zm-cRt" firstAttribute="width" secondItem="Wb4-F5-tW5" secondAttribute="width" multiplier="0.5" id="4Q5-tS-RKi"/>
+                    <constraint firstAttribute="topMargin" secondItem="o5S-WV-gmI" secondAttribute="top" id="84h-Rq-4Ai"/>
+                    <constraint firstItem="pdn-aV-W4Q" firstAttribute="height" secondItem="DdI-zm-cRt" secondAttribute="height" id="9Fr-py-YZv"/>
+                    <constraint firstItem="pdn-aV-W4Q" firstAttribute="top" secondItem="DdI-zm-cRt" secondAttribute="bottom" id="A9R-DC-dbb"/>
+                    <constraint firstItem="zxA-BK-d42" firstAttribute="leading" secondItem="WPE-jg-X35" secondAttribute="leading" id="Aly-9u-sp2"/>
+                    <constraint firstItem="WKJ-zQ-8R6" firstAttribute="leading" secondItem="zxA-BK-d42" secondAttribute="leading" id="Aod-23-UKH"/>
+                    <constraint firstItem="o5S-WV-gmI" firstAttribute="leading" secondItem="WPE-jg-X35" secondAttribute="leadingMargin" constant="10" id="Azs-EM-5Pr"/>
+                    <constraint firstItem="WKJ-zQ-8R6" firstAttribute="top" secondItem="Wb4-F5-tW5" secondAttribute="bottom" id="C9Z-ni-hbg"/>
+                    <constraint firstItem="Wb4-F5-tW5" firstAttribute="leading" secondItem="DdI-zm-cRt" secondAttribute="trailing" constant="10" id="HtK-0d-d5M"/>
+                    <constraint firstItem="Wb4-F5-tW5" firstAttribute="height" secondItem="DdI-zm-cRt" secondAttribute="height" id="Iir-j8-rhE"/>
+                    <constraint firstItem="Wb4-F5-tW5" firstAttribute="baseline" secondItem="DdI-zm-cRt" secondAttribute="baseline" id="Jml-yT-60Z"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Wb4-F5-tW5" secondAttribute="trailing" id="Km3-mq-aPx"/>
+                    <constraint firstItem="Wb4-F5-tW5" firstAttribute="trailing" secondItem="o5S-WV-gmI" secondAttribute="trailing" id="M2X-vX-kJi"/>
+                    <constraint firstItem="Wb4-F5-tW5" firstAttribute="trailing" secondItem="pdn-aV-W4Q" secondAttribute="trailing" id="PJ8-45-ui0"/>
+                    <constraint firstItem="DdI-zm-cRt" firstAttribute="trailing" secondItem="Lu6-hl-9pm" secondAttribute="trailing" id="PQD-gP-1hl"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="pdn-aV-W4Q" secondAttribute="bottom" id="duk-kE-Q1B"/>
+                    <constraint firstItem="Wb4-F5-tW5" firstAttribute="leading" secondItem="pdn-aV-W4Q" secondAttribute="leading" id="kGf-7m-VRp"/>
+                    <constraint firstItem="Lu6-hl-9pm" firstAttribute="height" secondItem="o5S-WV-gmI" secondAttribute="height" id="kPl-j6-9Di"/>
+                    <constraint firstItem="DdI-zm-cRt" firstAttribute="height" secondItem="Lu6-hl-9pm" secondAttribute="height" id="kfN-fm-NE8"/>
+                    <constraint firstItem="WKJ-zQ-8R6" firstAttribute="trailing" secondItem="zxA-BK-d42" secondAttribute="trailing" id="lNp-rP-8EN"/>
+                    <constraint firstItem="pdn-aV-W4Q" firstAttribute="top" secondItem="WKJ-zQ-8R6" secondAttribute="bottom" id="lWs-vF-VD5"/>
+                    <constraint firstAttribute="trailing" secondItem="zxA-BK-d42" secondAttribute="trailing" id="omM-qO-r0i"/>
+                    <constraint firstItem="Lu6-hl-9pm" firstAttribute="leading" secondItem="o5S-WV-gmI" secondAttribute="leading" id="r5j-iN-Cwo"/>
+                    <constraint firstItem="Lu6-hl-9pm" firstAttribute="baseline" secondItem="pdn-aV-W4Q" secondAttribute="baseline" id="t3z-eq-Rzb"/>
+                    <constraint firstItem="DdI-zm-cRt" firstAttribute="leading" secondItem="Lu6-hl-9pm" secondAttribute="leading" id="xHp-MN-w6B"/>
+                    <constraint firstItem="DdI-zm-cRt" firstAttribute="top" secondItem="zxA-BK-d42" secondAttribute="bottom" id="zEH-0P-Xzz"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="cityTextField" destination="Wb4-F5-tW5" id="Fby-93-VOG"/>
+                <outlet property="countryTextField" destination="pdn-aV-W4Q" id="BcK-0Z-u14"/>
+                <outlet property="firstSeparatorView" destination="zxA-BK-d42" id="xdf-uS-cRp"/>
+                <outlet property="postalCodeTextField" destination="DdI-zm-cRt" id="vil-U6-QHL"/>
+                <outlet property="postalPercentageConstraint" destination="4Q5-tS-RKi" id="yy5-Q8-uBs"/>
+                <outlet property="secondSeparatorView" destination="WKJ-zQ-8R6" id="r1V-za-UIl"/>
+                <outlet property="stateTextField" destination="Lu6-hl-9pm" id="7VA-3s-X5L"/>
+                <outlet property="streetTextField" destination="o5S-WV-gmI" id="FNV-0A-ukI"/>
+            </connections>
+            <point key="canvasLocation" x="57.5" y="-372"/>
+        </tableViewCell>
+    </objects>
+</document>
