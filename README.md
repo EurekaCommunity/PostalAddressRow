@@ -5,7 +5,7 @@
 <img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
 <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/swift3-compatible-4BC51D.svg?style=flat" alt="Swift 2 compatible" /></a>
 <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
-<a href="https://cocoapods.org/pods/XLActionController"><img src="https://img.shields.io/cocoapods/v/PostalAddressRow.svg" alt="CocoaPods compatible" /></a>
+<a href="https://cocoapods.org/pods/PostalAddressRow"><img src="https://img.shields.io/cocoapods/v/PostalAddressRow.svg" alt="CocoaPods compatible" /></a>
 <a href="https://raw.githubusercontent.com/EurekaCommunity/PostalAddressRow/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
 
@@ -52,8 +52,8 @@ class ViewController: FormViewController {
 ## Requirements
 
 * iOS 9.0+
-* Xcode 8.3+
-* Eureka version 2.*
+* Xcode 9.0+
+* Eureka version 4.*
 
 ## Getting involved
 
@@ -78,7 +78,7 @@ Follow these 3 steps to run Example project: Clone PostalAddressRow repository, 
 To install PostalAddressRow, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PostalAddressRow', '~> 1.0'
+pod 'PostalAddressRow', '~> 2.0'
 ```
 
 #### Carthage
@@ -88,7 +88,7 @@ pod 'PostalAddressRow', '~> 1.0'
 To install PostalAddressRow, simply add the following line to your Cartfile:
 
 ```ogdl
-github "EurekaCommunity/PostalAddressRow" ~> 1.0
+github "EurekaCommunity/PostalAddressRow" ~> 2.0
 ```
 
 You will then have to add `PostalAddressRow` and `Eureka` frameworks (from the `Carthage/Builds/iOS` folder) to your project's target embedded binaries.

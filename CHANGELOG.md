@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to PostalAddressRow will be documented in this file.
 
+### [2.0.0](https://github.com/EurekaCommunity/PostalAddressRow/releases/tag/2.0.0)
+<!-- Released on 2017-10-09. -->
+
+* Adds support for Xcode 9 (Swift 4).
+
+
 ### [1.1.0](https://github.com/EurekaCommunity/PostalAddressRow/releases/tag/1.1.0)
 <!-- Released on 2017-04-26. -->
 
