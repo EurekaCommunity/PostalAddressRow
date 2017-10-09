@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "PostalAddressRow"
-  s.version          = "1.1.0"
+  s.version          = "2.0.0"
   s.summary          = "An Eureka row that shows a series of UITextField's for the user to enter postal address information."
   s.homepage         = "https://github.com/EurekaCommunity/PostalAddressRow"
   s.license          = { type: 'MIT', file: 'LICENSE' }
@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
     'PostalAddressRow' => ['Sources/**/*.xib']
   }
   # s.ios.frameworks = 'UIKit', 'Foundation'
-  s.dependency 'Eureka', '3.0'
+  s.dependency 'Eureka', '4.0'
 end
