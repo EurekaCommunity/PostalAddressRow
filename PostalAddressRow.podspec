@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
     'PostalAddressRow' => ['Sources/**/*.xib']
   }
   # s.ios.frameworks = 'UIKit', 'Foundation'
-  s.dependency 'Eureka', '3.0'
+  s.dependency 'Eureka'
 end
