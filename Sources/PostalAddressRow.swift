@@ -70,11 +70,20 @@ public protocol PostalAddressRowConformance: PostalAddressFormatterConformance {
     var postalCodePlaceholder : String? { get set }
     var cityPlaceholder : String? { get set }
     var countryPlaceholder : String? { get set }
+	var countrySelectorRow : PushRow<String>?{ get set }
 }
 
 //MARK: PostalAddressRow
 
 open class _PostalAddressRow<Cell: CellType>: Row<Cell>, PostalAddressRowConformance, KeyboardReturnHandler where Cell: BaseCell, Cell: PostalAddressCellConformance {
+	
+	open override var section: Section?{
+		get{ return super.section }
+		set{
+			countrySelectorRow?.section = newValue
+			super.section = newValue
+		}
+	}
     
     /// Configuration for the keyboardReturnType of this row
     open var keyboardReturnType : KeyboardReturnTypeConfiguration?
@@ -129,6 +138,9 @@ open class _PostalAddressRow<Cell: CellType>: Row<Cell>, PostalAddressRowConform
     
     /// If the formatter should be used while the user is editing the country.
     open var countryUseFormatterDuringInput: Bool
+	
+	/// the country selector row
+	open var countrySelectorRow: PushRow<String>?
     
     public required init(tag: String?) {
         streetUseFormatterDuringInput = false
@@ -139,6 +151,11 @@ open class _PostalAddressRow<Cell: CellType>: Row<Cell>, PostalAddressRowConform
         
         super.init(tag: tag)
     }
+	
+	open override func updateCell(){
+		super.updateCell()
+		countrySelectorRow?.updateCell()
+	}
 }
 
 /// A PostalAddress valued row where the user can enter a postal address.
