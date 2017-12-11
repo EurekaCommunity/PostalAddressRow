@@ -20,6 +20,8 @@ public protocol PostalAddressType: Equatable {
     var postalCode: String? { get set }
     var city: String? { get set }
     var country: String? { get set }
+	
+	init()
 }
 
 public func == <T: PostalAddressType>(lhs: T, rhs: T) -> Bool {

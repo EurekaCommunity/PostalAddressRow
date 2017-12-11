@@ -107,11 +107,10 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
 				.onChange{ [weak self] in
 					guard let this = self else{ return }
 					
-					if this.row.baseValue == nil{
-						this.row.baseValue = PostalAddress()
-					}
+					var rowValue = this.row.value ?? T()
+					rowValue.country = $0.value
+					this.row.value = rowValue
 					
-					this.row.value?.country = $0.value
 					$0.title = $0.displayValueFor?($0.value) ?? $0.noValueDisplayText ?? (this.row as? PostalAddressRowConformance)?.countryPlaceholder
 					
 					this.row.updateCell()
@@ -119,11 +118,14 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
 				}.cellSetup{ [weak self] cell, row in
 					cell.selectionStyle = .none
 					cell.detailTextLabel?.isHidden = true
-					cell.textLabel?.textColor = self?.row.value?.country == nil ? .lightGray : (self?.row.isDisabled == true ? .gray : .black)
+					cell.textLabel?.textColor = self?.row.value?.country == nil ? UIColor(red: 196.0/255.0, green: 196.0/255.0, blue: 196.0/255.0, alpha: 1.0) : (self?.row.isDisabled == true ? .gray : .black)
 					
 				}.cellUpdate{ [weak self] cell, row in
 					cell.selectionStyle = .none
-					cell.textLabel?.textColor = self?.row.value?.country == nil ? .lightGray : (self?.row.isDisabled == true ? .gray : .black)
+					cell.textLabel?.textColor = self?.row.value?.country == nil ? UIColor(red: 196.0/255.0, green: 196.0/255.0, blue: 196.0/255.0, alpha: 1.0) : (self?.row.isDisabled == true ? .gray : .black)
+				
+				}.onPresent{ from, to in
+					to.sectionKeyForValue = { _ in return selectorRow.selectorTitle ?? "" }
 				}
 			
 			selectorRow.baseCell.setup()
@@ -258,11 +260,7 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
     }
 
     @objc open func textFieldDidChange(_ textField : UITextField){
-        if row.baseValue == nil{
-            row.baseValue = PostalAddress()
-        }
-
-        guard let textValue = textField.text else {
+		guard let textValue = textField.text else {
             switch(textField){
             case let field where field == streetTextField:
                 row.value?.street = nil
@@ -317,18 +315,19 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
                 let value: AutoreleasingUnsafeMutablePointer<AnyObject?> = AutoreleasingUnsafeMutablePointer<AnyObject?>.init(UnsafeMutablePointer<T>.allocate(capacity: 1))
                 let errorDesc: AutoreleasingUnsafeMutablePointer<NSString?>? = nil
                 if formatter.getObjectValue(value, for: textValue, errorDescription: errorDesc) {
+					var rowValue = row.value ?? T()
 
                     switch(textField){
                     case let field where field == streetTextField:
-                        row.value?.street = value.pointee as? String
+                        rowValue.street = value.pointee as? String
                     case let field where field == stateTextField:
-                        row.value?.state = value.pointee as? String
+                        rowValue.state = value.pointee as? String
                     case let field where field == postalCodeTextField:
-                        row.value?.postalCode = value.pointee as? String
+                        rowValue.postalCode = value.pointee as? String
                     case let field where field == cityTextField:
-                        row.value?.city = value.pointee as? String
+                        rowValue.city = value.pointee as? String
                     case let field where field == countryTextField:
-                        row.value?.country = value.pointee as? String
+                        rowValue.country = value.pointee as? String
                     default:
                         break
                     }
@@ -341,6 +340,8 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
                         }
                         textField.selectedTextRange = textField.textRange(from: selStartPos, to: selStartPos)
                     }
+					
+					row.value = rowValue
                     return
                 }
             }
@@ -363,21 +364,23 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
             }
             return
         }
-
+		
+		var rowValue = row.value ?? T()
         switch(textField){
         case let field where field == streetTextField:
-            row.value?.street = textValue
+            rowValue.street = textValue
         case let field where field == stateTextField:
-            row.value?.state = textValue
+            rowValue.state = textValue
         case let field where field == postalCodeTextField:
-            row.value?.postalCode = textValue
+            rowValue.postalCode = textValue
         case let field where field == cityTextField:
-            row.value?.city = textValue
+            rowValue.city = textValue
         case let field where field == countryTextField:
-            row.value?.country = textValue
+            rowValue.country = textValue
         default:
             break
         }
+		row.value = rowValue
     }
 
     //MARK: TextFieldDelegate
