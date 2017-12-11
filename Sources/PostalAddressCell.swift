@@ -123,9 +123,6 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
 				}.cellUpdate{ [weak self] cell, row in
 					cell.selectionStyle = .none
 					cell.textLabel?.textColor = self?.row.value?.country == nil ? UIColor(red: 196.0/255.0, green: 196.0/255.0, blue: 196.0/255.0, alpha: 1.0) : (self?.row.isDisabled == true ? .gray : .black)
-				
-				}.onPresent{ from, to in
-					to.sectionKeyForValue = { _ in return selectorRow.selectorTitle ?? "" }
 				}
 			
 			selectorRow.baseCell.setup()
@@ -164,7 +161,7 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
         countryTextField?.keyboardType = .asciiCapable
 
         if let rowConformance = row as? PostalAddressRowConformance {
-            setPlaceholderToTextField(textField: streetTextField, placeholder: rowConformance.streetPlaceholder)
+			setPlaceholderToTextField(textField: streetTextField, placeholder: rowConformance.streetPlaceholder)
             setPlaceholderToTextField(textField: stateTextField, placeholder: rowConformance.statePlaceholder)
             setPlaceholderToTextField(textField: postalCodeTextField, placeholder: rowConformance.postalCodePlaceholder)
             setPlaceholderToTextField(textField: cityTextField, placeholder: rowConformance.cityPlaceholder)
@@ -172,6 +169,7 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
 			
 			rowConformance.countrySelectorRow?.title = rowConformance.countrySelectorRow?.title ?? rowConformance.countryPlaceholder
 			rowConformance.countrySelectorRow?.selectorTitle = rowConformance.countrySelectorRow?.selectorTitle ?? rowConformance.countryPlaceholder
+			rowConformance.countrySelectorRow?.value = row.value?.country
         }
     }
 
