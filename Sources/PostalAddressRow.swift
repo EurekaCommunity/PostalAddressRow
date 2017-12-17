@@ -80,10 +80,13 @@ public protocol PostalAddressRowConformance: PostalAddressFormatterConformance {
 open class _PostalAddressRow<Cell: CellType>: Row<Cell>, PostalAddressRowConformance, KeyboardReturnHandler where Cell: BaseCell, Cell: PostalAddressCellConformance {
 	
 	open override var section: Section?{
-		get{ return super.section }
-		set{
-			countrySelectorRow?.section = newValue
-			super.section = newValue
+		didSet{
+			guard let section = section, let row = countrySelectorRow else { return }
+			let rowValue = row.value
+			row.value = nil
+			
+			row.section = section
+			row.value = rowValue //triggers the onChange event
 		}
 	}
     
@@ -162,6 +165,15 @@ open class _PostalAddressRow<Cell: CellType>: Row<Cell>, PostalAddressRowConform
 
 /// A PostalAddress valued row where the user can enter a postal address.
 public final class PostalAddressRow: _PostalAddressRow<PostalAddressCell>, RowType {
+	
+	open override var value: Cell.Value?{
+		get{ return super.value }
+		set{
+			self.countrySelectorRow?.value = newValue?.country
+			super.value = newValue
+		}
+	}
+	
     public required init(tag: String? = nil) {
         super.init(tag: tag)
         // load correct bundle for cell nib file
