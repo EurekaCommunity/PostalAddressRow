@@ -20,10 +20,11 @@ public protocol PostalAddressCellConformance {
     var postalCodeTextField: UITextField? { get }
     var cityTextField: UITextField? { get }
     var countryTextField: UITextField? { get }
+	var countrySelectorTableView: UITableView?{ get }
 }
 
 /// Base class that implements the cell logic for the PostalAddressRow
-open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAddressCellConformance, UITextFieldDelegate {
+open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAddressCellConformance, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet open var streetTextField: UITextField?
     @IBOutlet open var firstSeparatorView: UIView?
@@ -32,10 +33,14 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
     @IBOutlet open var cityTextField: UITextField?
     @IBOutlet open var secondSeparatorView: UIView?
     @IBOutlet open var countryTextField: UITextField?
-
+	@IBOutlet open var countrySelectorTableView: UITableView?
+	
     @IBOutlet weak var postalPercentageConstraint: NSLayoutConstraint?
-
+	
     open var textFieldOrdering: [UITextField?] = []
+	var textFieldOrderingVisible: [UITextField?]{
+		return textFieldOrdering.filter{ $0?.isHidden == false }
+	}
 
     public required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -61,6 +66,8 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
         cityTextField?.removeTarget(self, action: nil, for: .allEvents)
         countryTextField?.delegate = nil
         countryTextField?.removeTarget(self, action: nil, for: .allEvents)
+		countrySelectorTableView?.delegate = nil
+		countrySelectorTableView?.dataSource = nil
         imageView?.removeObserver(self, forKeyPath: "image")
     }
 
@@ -80,6 +87,47 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
             textField?.delegate = self
             textField?.font = .preferredFont(forTextStyle: UIFontTextStyle.body)
         }
+		
+		if (row as? PostalAddressRowConformance)?.countrySelectorRow == nil{
+			countrySelectorTableView?.isHidden = true
+			countryTextField?.isHidden = false
+		} else {
+			countrySelectorTableView?.isHidden = false
+			countryTextField?.isHidden = true
+		}
+		
+		countrySelectorTableView?.isScrollEnabled = false
+		countrySelectorTableView?.sectionHeaderHeight = 0.0
+		countrySelectorTableView?.sectionFooterHeight = 0.0
+		countrySelectorTableView?.delegate = self
+		countrySelectorTableView?.dataSource = self
+		
+		if let rowConformance = row as? PostalAddressRowConformance, let selectorRow = rowConformance.countrySelectorRow{
+			selectorRow
+				.onChange{ [weak self] in
+					guard let this = self else{ return }
+					
+					var rowValue = this.row.value ?? T()
+					rowValue.country = $0.value
+					this.row.value = rowValue
+					
+					$0.title = $0.displayValueFor?($0.value) ?? $0.noValueDisplayText ?? (this.row as? PostalAddressRowConformance)?.countryPlaceholder
+					
+					this.row.updateCell()
+					
+				}.cellSetup{ [weak self] cell, row in
+					cell.selectionStyle = .none
+					cell.detailTextLabel?.isHidden = true
+					cell.textLabel?.textColor = self?.row.value?.country == nil ? UIColor(red: 196.0/255.0, green: 196.0/255.0, blue: 196.0/255.0, alpha: 1.0) : (self?.row.isDisabled == true ? .gray : .black)
+					
+				}.cellUpdate{ [weak self] cell, row in
+					cell.selectionStyle = .none
+					cell.textLabel?.textColor = self?.row.value?.country == nil ? UIColor(red: 196.0/255.0, green: 196.0/255.0, blue: 196.0/255.0, alpha: 1.0) : (self?.row.isDisabled == true ? .gray : .black)
+				}
+			
+			selectorRow.baseCell.setup()
+		}
+		
 
         for separator in [firstSeparatorView, secondSeparatorView] {
             separator?.backgroundColor = .gray
@@ -113,11 +161,15 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
         countryTextField?.keyboardType = .asciiCapable
 
         if let rowConformance = row as? PostalAddressRowConformance {
-            setPlaceholderToTextField(textField: streetTextField, placeholder: rowConformance.streetPlaceholder)
+			setPlaceholderToTextField(textField: streetTextField, placeholder: rowConformance.streetPlaceholder)
             setPlaceholderToTextField(textField: stateTextField, placeholder: rowConformance.statePlaceholder)
             setPlaceholderToTextField(textField: postalCodeTextField, placeholder: rowConformance.postalCodePlaceholder)
             setPlaceholderToTextField(textField: cityTextField, placeholder: rowConformance.cityPlaceholder)
             setPlaceholderToTextField(textField: countryTextField, placeholder: rowConformance.countryPlaceholder)
+			
+			rowConformance.countrySelectorRow?.title = rowConformance.countrySelectorRow?.title ?? rowConformance.countryPlaceholder
+			rowConformance.countrySelectorRow?.selectorTitle = rowConformance.countrySelectorRow?.selectorTitle ?? rowConformance.countryPlaceholder
+			rowConformance.countrySelectorRow?.value = row.value?.country
         }
     }
 
@@ -137,12 +189,13 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
                 stateTextField?.canBecomeFirstResponder == true ||
                 postalCodeTextField?.canBecomeFirstResponder == true ||
                 cityTextField?.canBecomeFirstResponder == true ||
-                countryTextField?.canBecomeFirstResponder == true
+                countryTextField?.canBecomeFirstResponder == true ||
+				(row as? PostalAddressRowConformance)?.countrySelectorRow?.cell?.cellCanBecomeFirstResponder() == true
         )
     }
 
     open override func cellBecomeFirstResponder(withDirection direction: Direction) -> Bool {
-        return direction == .down ? textFieldOrdering.first??.becomeFirstResponder() ?? false : textFieldOrdering.last??.becomeFirstResponder() ?? false
+        return direction == .down ? textFieldOrderingVisible.first??.becomeFirstResponder() ?? false : textFieldOrderingVisible.last??.becomeFirstResponder() ?? false
     }
 
     open override func cellResignFirstResponder() -> Bool {
@@ -152,11 +205,12 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
             && stateTextField?.resignFirstResponder() ?? true
             && cityTextField?.resignFirstResponder() ?? true
             && countryTextField?.resignFirstResponder() ?? true
+			&& (row as? PostalAddressRowConformance)?.countrySelectorRow?.cell?.cellResignFirstResponder() ?? true
     }
 
     override open var inputAccessoryView: UIView? {
         if let v = formViewController()?.inputAccessoryView(for: row) as? NavigationAccessoryView {
-            guard let first = textFieldOrdering.first, let last = textFieldOrdering.last, first != last else { return v }
+            guard let first = textFieldOrderingVisible.first, let last = textFieldOrderingVisible.last, first != last else { return v }
 
             if first?.isFirstResponder == true {
                 v.nextButton.isEnabled = true
@@ -185,9 +239,9 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
         guard let inputAccesoryView  = inputAccessoryView as? NavigationAccessoryView else { return }
 
         var index = 0
-        for field in textFieldOrdering {
+        for field in textFieldOrderingVisible {
             if field?.isFirstResponder == true {
-                let _ = sender == inputAccesoryView.previousButton ? textFieldOrdering[index-1]?.becomeFirstResponder() : textFieldOrdering[index+1]?.becomeFirstResponder()
+                let _ = sender == inputAccesoryView.previousButton ? textFieldOrderingVisible[index-1]?.becomeFirstResponder() : textFieldOrderingVisible[index+1]?.becomeFirstResponder()
                 break
             }
             index += 1
@@ -204,11 +258,7 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
     }
 
     @objc open func textFieldDidChange(_ textField : UITextField){
-        if row.baseValue == nil{
-            row.baseValue = PostalAddress()
-        }
-
-        guard let textValue = textField.text else {
+		guard let textValue = textField.text else {
             switch(textField){
             case let field where field == streetTextField:
                 row.value?.street = nil
@@ -263,18 +313,19 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
                 let value: AutoreleasingUnsafeMutablePointer<AnyObject?> = AutoreleasingUnsafeMutablePointer<AnyObject?>.init(UnsafeMutablePointer<T>.allocate(capacity: 1))
                 let errorDesc: AutoreleasingUnsafeMutablePointer<NSString?>? = nil
                 if formatter.getObjectValue(value, for: textValue, errorDescription: errorDesc) {
+					var rowValue = row.value ?? T()
 
                     switch(textField){
                     case let field where field == streetTextField:
-                        row.value?.street = value.pointee as? String
+                        rowValue.street = value.pointee as? String
                     case let field where field == stateTextField:
-                        row.value?.state = value.pointee as? String
+                        rowValue.state = value.pointee as? String
                     case let field where field == postalCodeTextField:
-                        row.value?.postalCode = value.pointee as? String
+                        rowValue.postalCode = value.pointee as? String
                     case let field where field == cityTextField:
-                        row.value?.city = value.pointee as? String
+                        rowValue.city = value.pointee as? String
                     case let field where field == countryTextField:
-                        row.value?.country = value.pointee as? String
+                        rowValue.country = value.pointee as? String
                     default:
                         break
                     }
@@ -287,6 +338,8 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
                         }
                         textField.selectedTextRange = textField.textRange(from: selStartPos, to: selStartPos)
                     }
+					
+					row.value = rowValue
                     return
                 }
             }
@@ -309,21 +362,23 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
             }
             return
         }
-
+		
+		var rowValue = row.value ?? T()
         switch(textField){
         case let field where field == streetTextField:
-            row.value?.street = textValue
+            rowValue.street = textValue
         case let field where field == stateTextField:
-            row.value?.state = textValue
+            rowValue.state = textValue
         case let field where field == postalCodeTextField:
-            row.value?.postalCode = textValue
+            rowValue.postalCode = textValue
         case let field where field == cityTextField:
-            row.value?.city = textValue
+            rowValue.city = textValue
         case let field where field == countryTextField:
-            row.value?.country = textValue
+            rowValue.country = textValue
         default:
             break
         }
+		row.value = rowValue
     }
 
     //MARK: TextFieldDelegate
@@ -358,6 +413,44 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
     open func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         return formViewController()?.textInputShouldEndEditing(textField, cell: self) ?? true
     }
+	
+	//MARK: UITableViewDataSource
+	
+	public func numberOfSections(in tableView: UITableView) -> Int {
+		guard let rowConformance = row as? PostalAddressRowConformance else{ return 0 }
+		return rowConformance.countrySelectorRow == nil ? 0 : 1
+	}
+	
+	public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		guard let rowConformance = row as? PostalAddressRowConformance else{ return 0 }
+		return rowConformance.countrySelectorRow == nil ? 0 : 1
+	}
+	
+	//MARK: UITableViewDelegate
+	
+	public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		guard let row = (row as? PostalAddressRowConformance)?.countrySelectorRow else{ fatalError() }
+		return row.baseCell
+	}
+	
+	public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard let row = (row as? PostalAddressRowConformance)?.countrySelectorRow else{ return }
+		
+		// row.baseCell.cellBecomeFirstResponder() may be cause InlineRow collapsed then section count will be changed. Use orignal indexPath will out of  section's bounds.
+		if !row.baseCell.cellCanBecomeFirstResponder() || !row.baseCell.cellBecomeFirstResponder() {
+			tableView.endEditing(true)
+		}
+		row.didSelect()
+	}
+	
+	public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		guard let row = (row as? PostalAddressRowConformance)?.countrySelectorRow else{ return tableView.rowHeight }
+		return row.baseCell.height?() ?? tableView.rowHeight
+	}
+	
+	public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		return false
+	}
 }
 
 
