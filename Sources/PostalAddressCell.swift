@@ -124,7 +124,7 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
     private func setPlaceholderToTextField(textField: UITextField?, placeholder: String?) {
         if let placeholder = placeholder, let textField = textField {
             if let color = (row as? PostalAddressRowConformance)?.placeholderColor {
-                textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: color])
+                textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedStringKey.foregroundColor: color])
             } else {
                 textField.placeholder = placeholder
             }
@@ -181,7 +181,7 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
         return super.inputAccessoryView
     }
 
-    func internalNavigationAction(_ sender: UIBarButtonItem) {
+    @objc func internalNavigationAction(_ sender: UIBarButtonItem) {
         guard let inputAccesoryView  = inputAccessoryView as? NavigationAccessoryView else { return }
 
         var index = 0
@@ -203,7 +203,7 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
         }
     }
 
-    open func textFieldDidChange(_ textField : UITextField){
+    @objc open func textFieldDidChange(_ textField : UITextField){
         if row.baseValue == nil{
             row.baseValue = PostalAddress()
         }
