@@ -37,7 +37,7 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
 
     open var textFieldOrdering: [UITextField?] = []
 
-    public required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public required init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
 
@@ -78,7 +78,7 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
             textField?.textAlignment =  .left
             textField?.clearButtonMode =  .whileEditing
             textField?.delegate = self
-            textField?.font = .preferredFont(forTextStyle: UIFontTextStyle.body)
+            textField?.font = .preferredFont(forTextStyle: UIFont.TextStyle.body)
         }
 
         for separator in [firstSeparatorView, secondSeparatorView] {
@@ -124,7 +124,7 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
     private func setPlaceholderToTextField(textField: UITextField?, placeholder: String?) {
         if let placeholder = placeholder, let textField = textField {
             if let color = (row as? PostalAddressRowConformance)?.placeholderColor {
-                textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedStringKey.foregroundColor: color])
+                textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: color])
             } else {
                 textField.placeholder = placeholder
             }
@@ -363,7 +363,7 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
 
 /// Concrete implementation of generic _PostalAddressCell with row value type PostalAddress
 public final class PostalAddressCell: _PostalAddressCell<PostalAddress> {
-    public required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public required init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
