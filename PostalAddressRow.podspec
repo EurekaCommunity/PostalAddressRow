@@ -14,4 +14,5 @@ Pod::Spec.new do |s|
     'PostalAddressRow' => ['Sources/**/*.xib']
   }
   s.dependency 'Eureka', '~> 5.0'
+  s.swift_version = '5.0'
 end
