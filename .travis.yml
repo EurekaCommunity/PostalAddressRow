@@ -1,13 +1,13 @@
 language: objective-c
-osx_image: xcode9
+osx_image: xcode11
 env:
-  - DESTINATION="OS=11.0,name=iPhone 7" SCHEME="PostalAddressRow" SDK=iphonesimulator
+  - DESTINATION="OS=13.0,name=iPhone 11" SCHEME="PostalAddressRow" SDK=iphonesimulator
 
 before_install:
 - brew update
 - brew outdated carthage || brew upgrade carthage
 - carthage update --platform iOS
-- gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+- gem install xcpretty --no-document --quiet
 
 script:
 - xcodebuild clean build -project PostalAddressRow.xcodeproj -scheme "$SCHEME" -sdk "$SDK"
