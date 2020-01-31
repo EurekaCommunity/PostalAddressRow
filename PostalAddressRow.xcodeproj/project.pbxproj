@@ -9,13 +9,10 @@
 /* Begin PBXBuildFile section */
 		28F828811C494B2C00330CF4 /* PostalAddressRow.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F828801C494B2C00330CF4 /* PostalAddressRow.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		28F828881C494B2C00330CF4 /* PostalAddressRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F8287D1C494B2C00330CF4 /* PostalAddressRow.framework */; };
+		8F49F8AB1D871ED40058ACF9 /* Eureka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F49F8AA1D871ED40058ACF9 /* Eureka.framework */; };
 		8F58BC761D889B6400F14961 /* PostalAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F58BC751D889B6400F14961 /* PostalAddressCell.swift */; };
 		8FDB703D1D871BAD0008694A /* PostalAddressRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDB703C1D871BAD0008694A /* PostalAddressRow.swift */; };
 		8FDB703F1D871C3F0008694A /* PostalAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FDB703E1D871C3F0008694A /* PostalAddressCell.xib */; };
-		AA94F92223E4901D0080C161 /* Eureka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA94F92123E4901C0080C161 /* Eureka.framework */; };
-		AA94F92323E4901D0080C161 /* Eureka.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AA94F92123E4901C0080C161 /* Eureka.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AA94F92823E496FF0080C161 /* backup.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA94F92723E496FF0080C161 /* backup.xib */; };
-		AA94F92A23E4A5E30080C161 /* ba in Resources */ = {isa = PBXBuildFile; fileRef = AA94F92923E4A5E30080C161 /* ba */; };
 		CB3F7D691F8BEF7900C856E5 /* PostalAddressRowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5142631F8BEECC00E20AD5 /* PostalAddressRowTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,31 +26,15 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		AAFF528723E48EE800C08DF8 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				AA94F92323E4901D0080C161 /* Eureka.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		28F8287D1C494B2C00330CF4 /* PostalAddressRow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PostalAddressRow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F828801C494B2C00330CF4 /* PostalAddressRow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostalAddressRow.h; sourceTree = "<group>"; };
 		28F828821C494B2C00330CF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28F828871C494B2C00330CF4 /* PostalAddressRowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostalAddressRowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F49F8AA1D871ED40058ACF9 /* Eureka.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Eureka.framework; path = Carthage/Build/iOS/Eureka.framework; sourceTree = "<group>"; };
 		8F58BC751D889B6400F14961 /* PostalAddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostalAddressCell.swift; sourceTree = "<group>"; };
 		8FDB703C1D871BAD0008694A /* PostalAddressRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostalAddressRow.swift; sourceTree = "<group>"; };
 		8FDB703E1D871C3F0008694A /* PostalAddressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostalAddressCell.xib; sourceTree = "<group>"; };
-		AA94F92123E4901C0080C161 /* Eureka.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Eureka.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA94F92723E496FF0080C161 /* backup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = backup.xib; sourceTree = "<group>"; };
-		AA94F92923E4A5E30080C161 /* ba */ = {isa = PBXFileReference; lastKnownFileType = text; path = ba; sourceTree = "<group>"; };
 		CB5142631F8BEECC00E20AD5 /* PostalAddressRowTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostalAddressRowTests.swift; sourceTree = SOURCE_ROOT; };
 		CB5142641F8BEECC00E20AD5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -63,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA94F92223E4901D0080C161 /* Eureka.framework in Frameworks */,
+				8F49F8AB1D871ED40058ACF9 /* Eureka.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,8 +95,6 @@
 				8FDB703E1D871C3F0008694A /* PostalAddressCell.xib */,
 				8FDB703C1D871BAD0008694A /* PostalAddressRow.swift */,
 				8F58BC751D889B6400F14961 /* PostalAddressCell.swift */,
-				AA94F92723E496FF0080C161 /* backup.xib */,
-				AA94F92923E4A5E30080C161 /* ba */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -123,7 +102,7 @@
 		8F49F8A91D871ED40058ACF9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AA94F92123E4901C0080C161 /* Eureka.framework */,
+				8F49F8AA1D871ED40058ACF9 /* Eureka.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -159,7 +138,6 @@
 				28F828791C494B2C00330CF4 /* Frameworks */,
 				28F8287A1C494B2C00330CF4 /* Headers */,
 				28F8287B1C494B2C00330CF4 /* Resources */,
-				AAFF528723E48EE800C08DF8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -232,8 +210,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FDB703F1D871C3F0008694A /* PostalAddressCell.xib in Resources */,
-				AA94F92823E496FF0080C161 /* backup.xib in Resources */,
-				AA94F92A23E4A5E30080C161 /* ba in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
