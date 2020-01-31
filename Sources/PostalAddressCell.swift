@@ -15,7 +15,9 @@ import Eureka
  *  Protocol for cells that contain a postal address
  */
 public protocol PostalAddressCellConformance {
-    var streetTextField: UITextField? { get }
+    var street1TextField: UITextField? { get }
+    var street2TextField: UITextField? { get }
+    var poboxTextField: UITextField? { get }
     var stateTextField: UITextField? { get }
     var postalCodeTextField: UITextField? { get }
     var cityTextField: UITextField? { get }
@@ -25,7 +27,9 @@ public protocol PostalAddressCellConformance {
 /// Base class that implements the cell logic for the PostalAddressRow
 open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAddressCellConformance, UITextFieldDelegate {
 
-    @IBOutlet open var streetTextField: UITextField?
+    @IBOutlet open var street1TextField: UITextField?
+    @IBOutlet open var street2TextField: UITextField?
+    @IBOutlet open var poboxTextField: UITextField?
     @IBOutlet open var firstSeparatorView: UIView?
     @IBOutlet open var stateTextField: UITextField?
     @IBOutlet open var postalCodeTextField: UITextField?
@@ -47,12 +51,16 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
 
     open override func awakeFromNib() {
         super.awakeFromNib()
-        textFieldOrdering = [streetTextField, postalCodeTextField, cityTextField, stateTextField, countryTextField]
+        textFieldOrdering = [street1TextField, street2TextField, poboxTextField, postalCodeTextField, cityTextField, stateTextField, countryTextField]
     }
 
     deinit {
-        streetTextField?.delegate = nil
-        streetTextField?.removeTarget(self, action: nil, for: .allEvents)
+        street1TextField?.delegate = nil
+        street1TextField?.removeTarget(self, action: nil, for: .allEvents)
+        street2TextField?.delegate = nil
+        street2TextField?.removeTarget(self, action: nil, for: .allEvents)
+        poboxTextField?.delegate = nil
+        poboxTextField?.removeTarget(self, action: nil, for: .allEvents)
         stateTextField?.delegate = nil
         stateTextField?.removeTarget(self, action: nil, for: .allEvents)
         postalCodeTextField?.delegate = nil
@@ -97,8 +105,14 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
             textField?.autocapitalizationType = .words
         }
 
-        streetTextField?.text = row.value?.street
-        streetTextField?.keyboardType = .asciiCapable
+        street1TextField?.text = row.value?.street1
+        street1TextField?.keyboardType = .asciiCapable
+
+        street2TextField?.text = row.value?.street2
+        street2TextField?.keyboardType = .asciiCapable
+
+        poboxTextField?.text = row.value?.pobox
+        poboxTextField?.keyboardType = .asciiCapable
 
         stateTextField?.text = row.value?.state
         stateTextField?.keyboardType = .asciiCapable
@@ -113,7 +127,9 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
         countryTextField?.keyboardType = .asciiCapable
 
         if let rowConformance = row as? PostalAddressRowConformance {
-            setPlaceholderToTextField(textField: streetTextField, placeholder: rowConformance.streetPlaceholder)
+            setPlaceholderToTextField(textField: street1TextField, placeholder: rowConformance.street1Placeholder)
+            setPlaceholderToTextField(textField: street2TextField, placeholder: rowConformance.street2Placeholder)
+            setPlaceholderToTextField(textField: poboxTextField, placeholder: rowConformance.poboxPlaceholder)
             setPlaceholderToTextField(textField: stateTextField, placeholder: rowConformance.statePlaceholder)
             setPlaceholderToTextField(textField: postalCodeTextField, placeholder: rowConformance.postalCodePlaceholder)
             setPlaceholderToTextField(textField: cityTextField, placeholder: rowConformance.cityPlaceholder)
@@ -133,7 +149,9 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
 
     open override func cellCanBecomeFirstResponder() -> Bool {
         return !row.isDisabled && (
-            streetTextField?.canBecomeFirstResponder == true ||
+            street1TextField?.canBecomeFirstResponder == true ||
+                street2TextField?.canBecomeFirstResponder == true ||
+                poboxTextField?.canBecomeFirstResponder == true ||
                 stateTextField?.canBecomeFirstResponder == true ||
                 postalCodeTextField?.canBecomeFirstResponder == true ||
                 cityTextField?.canBecomeFirstResponder == true ||
@@ -146,7 +164,9 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
     }
 
     open override func cellResignFirstResponder() -> Bool {
-        return streetTextField?.resignFirstResponder() ?? true
+        return street1TextField?.resignFirstResponder() ?? true
+            && street2TextField?.resignFirstResponder() ?? true
+            && poboxTextField?.resignFirstResponder() ?? true
             && stateTextField?.resignFirstResponder() ?? true
             && postalCodeTextField?.resignFirstResponder() ?? true
             && stateTextField?.resignFirstResponder() ?? true
@@ -210,8 +230,14 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
 
         guard let textValue = textField.text else {
             switch(textField){
-            case let field where field == streetTextField:
-                row.value?.street = nil
+            case let field where field == street1TextField:
+                row.value?.street1 = nil
+
+            case let field where field == street2TextField:
+                row.value?.street2 = nil
+
+            case let field where field == poboxTextField:
+                row.value?.pobox = nil
 
             case let field where field == stateTextField:
                 row.value?.state = nil
@@ -235,9 +261,17 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
             var valueFormatter: Formatter?
 
             switch(textField){
-            case let field where field == streetTextField:
-                useFormatterDuringInput = rowConformance.streetUseFormatterDuringInput
-                valueFormatter = rowConformance.streetFormatter
+            case let field where field == street1TextField:
+                useFormatterDuringInput = rowConformance.street1UseFormatterDuringInput
+                valueFormatter = rowConformance.street1Formatter
+
+            case let field where field == street2TextField:
+                useFormatterDuringInput = rowConformance.street2UseFormatterDuringInput
+                valueFormatter = rowConformance.street2Formatter
+
+            case let field where field == poboxTextField:
+                useFormatterDuringInput = rowConformance.poboxUseFormatterDuringInput
+                valueFormatter = rowConformance.poboxFormatter
 
             case let field where field == stateTextField:
                 useFormatterDuringInput = rowConformance.stateUseFormatterDuringInput
@@ -265,8 +299,12 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
                 if formatter.getObjectValue(value, for: textValue, errorDescription: errorDesc) {
 
                     switch(textField){
-                    case let field where field == streetTextField:
-                        row.value?.street = value.pointee as? String
+                    case let field where field == street1TextField:
+                        row.value?.street1 = value.pointee as? String
+                    case let field where field == street2TextField:
+                        row.value?.street2 = value.pointee as? String
+                    case let field where field == poboxTextField:
+                        row.value?.pobox = value.pointee as? String
                     case let field where field == stateTextField:
                         row.value?.state = value.pointee as? String
                     case let field where field == postalCodeTextField:
@@ -294,8 +332,12 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
 
         guard !textValue.isEmpty else {
             switch(textField){
-            case let field where field == streetTextField:
-                row.value?.street = nil
+            case let field where field == street1TextField:
+                row.value?.street1 = nil
+            case let field where field == street2TextField:
+                row.value?.street2 = nil
+            case let field where field == poboxTextField:
+                row.value?.pobox = nil
             case let field where field == stateTextField:
                 row.value?.state = nil
             case let field where field == postalCodeTextField:
@@ -311,8 +353,12 @@ open class _PostalAddressCell<T: PostalAddressType>: Cell<T>, CellType, PostalAd
         }
 
         switch(textField){
-        case let field where field == streetTextField:
-            row.value?.street = textValue
+        case let field where field == street1TextField:
+            row.value?.street1 = textValue
+        case let field where field == street2TextField:
+            row.value?.street2 = textValue
+        case let field where field == poboxTextField:
+            row.value?.pobox = textValue
         case let field where field == stateTextField:
             row.value?.state = textValue
         case let field where field == postalCodeTextField:

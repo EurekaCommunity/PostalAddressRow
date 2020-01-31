@@ -15,7 +15,9 @@ import Eureka
  *  Protocol to be implemented by PostalAddress types.
  */
 public protocol PostalAddressType: Equatable {
-    var street: String? { get set }
+    var street1: String? { get set }
+    var street2: String? { get set }
+    var pobox: String? { get set }
     var state: String? { get set }
     var postalCode: String? { get set }
     var city: String? { get set }
@@ -23,12 +25,14 @@ public protocol PostalAddressType: Equatable {
 }
 
 public func == <T: PostalAddressType>(lhs: T, rhs: T) -> Bool {
-    return lhs.street == rhs.street && lhs.state == rhs.state && lhs.postalCode == rhs.postalCode && lhs.city == rhs.city && lhs.country == rhs.country
+    return lhs.street1 == rhs.street1 && lhs.street2 == rhs.street2 && lhs.pobox == rhs.pobox && lhs.state == rhs.state && lhs.postalCode == rhs.postalCode && lhs.city == rhs.city && lhs.country == rhs.country
 }
 
 /// Row type for PostalAddressRow
 public struct PostalAddress: PostalAddressType {
-    public var street: String?
+    public var street1: String?
+    public var street2: String?
+    public var pobox: String?
     public var state: String?
     public var postalCode: String?
     public var city: String?
@@ -36,8 +40,10 @@ public struct PostalAddress: PostalAddressType {
     
     public init(){}
     
-    public init(street: String?, state: String?, postalCode: String?, city: String?, country: String?) {
-        self.street = street
+    public init(street1: String?, street2: String?, pobox: String?, state: String?, postalCode: String?, city: String?, country: String?) {
+        self.street1 = street1
+        self.street2 = street2
+        self.pobox = pobox
         self.state = state
         self.postalCode = postalCode
         self.city = city
@@ -46,8 +52,14 @@ public struct PostalAddress: PostalAddressType {
 }
 
 public protocol PostalAddressFormatterConformance: class {
-    var streetUseFormatterDuringInput: Bool { get set }
-    var streetFormatter: Formatter? { get set }
+    var street1UseFormatterDuringInput: Bool { get set }
+    var street1Formatter: Formatter? { get set }
+    
+    var street2UseFormatterDuringInput: Bool { get set }
+    var street2Formatter: Formatter? { get set }
+    
+    var poboxUseFormatterDuringInput: Bool { get set }
+    var poboxFormatter: Formatter? { get set }
     
     var stateUseFormatterDuringInput: Bool { get set }
     var stateFormatter: Formatter? { get set }
@@ -65,7 +77,9 @@ public protocol PostalAddressFormatterConformance: class {
 public protocol PostalAddressRowConformance: PostalAddressFormatterConformance {
     var postalAddressPercentage : CGFloat? { get set }
     var placeholderColor : UIColor? { get set }
-    var streetPlaceholder : String? { get set }
+    var street1Placeholder : String? { get set }
+    var street2Placeholder : String? { get set }
+    var poboxPlaceholder : String? { get set }
     var statePlaceholder : String? { get set }
     var postalCodePlaceholder : String? { get set }
     var cityPlaceholder : String? { get set }
@@ -85,8 +99,14 @@ open class _PostalAddressRow<Cell: CellType>: Row<Cell>, PostalAddressRowConform
     /// The textColor for the textField's placeholder
     open var placeholderColor : UIColor?
     
-    /// The placeholder for the street textField
-    open var streetPlaceholder : String?
+    /// The placeholder for the street1 textField
+    open var street1Placeholder : String?
+    
+    /// The placeholder for the street 2textField
+    open var street2Placeholder : String?
+    
+    /// The placeholder for the pobox textField
+    open var poboxPlaceholder : String?
     
     /// The placeholder for the state textField
     open var statePlaceholder : String?
@@ -100,8 +120,14 @@ open class _PostalAddressRow<Cell: CellType>: Row<Cell>, PostalAddressRowConform
     /// The placeholder for the country textField
     open var countryPlaceholder : String?
     
-    /// A formatter to be used to format the user's input for street
-    open var streetFormatter: Formatter?
+    /// A formatter to be used to format the user's input for street1
+    open var street1Formatter: Formatter?
+    
+    /// A formatter to be used to format the user's input for street2
+    open var street2Formatter: Formatter?
+    
+    /// A formatter to be used to format the user's input for pobox
+    open var poboxFormatter: Formatter?
     
     /// A formatter to be used to format the user's input for state
     open var stateFormatter: Formatter?
@@ -115,8 +141,14 @@ open class _PostalAddressRow<Cell: CellType>: Row<Cell>, PostalAddressRowConform
     /// A formatter to be used to format the user's input for country
     open var countryFormatter: Formatter?
     
-    /// If the formatter should be used while the user is editing the street.
-    open var streetUseFormatterDuringInput: Bool
+    /// If the formatter should be used while the user is editing the street1.
+    open var street1UseFormatterDuringInput: Bool
+    
+    /// If the formatter should be used while the user is editing the street2.
+    open var street2UseFormatterDuringInput: Bool
+    
+    /// If the formatter should be used while the user is editing the street1.
+    open var poboxUseFormatterDuringInput: Bool
     
     /// If the formatter should be used while the user is editing the state.
     open var stateUseFormatterDuringInput: Bool
@@ -131,7 +163,9 @@ open class _PostalAddressRow<Cell: CellType>: Row<Cell>, PostalAddressRowConform
     open var countryUseFormatterDuringInput: Bool
     
     public required init(tag: String?) {
-        streetUseFormatterDuringInput = false
+        street1UseFormatterDuringInput = false
+        street2UseFormatterDuringInput = false
+        poboxUseFormatterDuringInput = false
         stateUseFormatterDuringInput = false
         postalCodeUseFormatterDuringInput = false
         cityUseFormatterDuringInput = false

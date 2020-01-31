@@ -22,16 +22,6 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eR5-P1-6WY">
-                        <nil key="textColor"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
-                    </textField>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G9x-mK-J3Q">
-                        <nil key="textColor"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
-                    </textField>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxA-BK-d42">
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -66,58 +56,30 @@
                     </textField>
                 </subviews>
                 <constraints>
-                    <!-- Seperators top is connectd to the bottom of the street 1 but should be pobox -->
-                    <!-- <constraint firstItem="zxA-BK-d42" firstAttribute="top" secondItem="o5S-WV-gmI" secondAttribute="bottom" id="3m8-71-U9I"/> -->
-                    <constraint firstItem="zxA-BK-d42" firstAttribute="top" secondItem="G9x-mK-J3Q" secondAttribute="bottom" id="3m8-71-U9I"/>
-                    <!-- the top of pobox should be the bottom of stree2 -->
-                    <constraint firstItem="G9x-mK-J3Q" firstAttribute="top" secondItem="eR5-P1-6WY" secondAttribute="bottom" id="49M-71-zk4"/>
-                    <!-- the top of street2 should be the bottom of street1 -->
-                    <constraint firstItem="eR5-P1-6WY" firstAttribute="top" secondItem="o5S-WV-gmI" secondAttribute="bottom" id="Jx5-0I-TVf"/>
-                    
+                    <constraint firstItem="zxA-BK-d42" firstAttribute="top" secondItem="o5S-WV-gmI" secondAttribute="bottom" id="3m8-71-U9I"/>
                     <constraint firstItem="DdI-zm-cRt" firstAttribute="width" secondItem="Wb4-F5-tW5" secondAttribute="width" multiplier="0.5" id="4Q5-tS-RKi"/>
-                    
-                    <!-- The top of ?? is connected to street1 -->
                     <constraint firstAttribute="topMargin" secondItem="o5S-WV-gmI" secondAttribute="top" id="84h-Rq-4Ai"/>
-                    
                     <constraint firstItem="pdn-aV-W4Q" firstAttribute="height" secondItem="DdI-zm-cRt" secondAttribute="height" id="9Fr-py-YZv"/>
                     <constraint firstItem="pdn-aV-W4Q" firstAttribute="top" secondItem="DdI-zm-cRt" secondAttribute="bottom" id="A9R-DC-dbb"/>
                     <constraint firstItem="zxA-BK-d42" firstAttribute="leading" secondItem="WPE-jg-X35" secondAttribute="leading" id="Aly-9u-sp2"/>
                     <constraint firstItem="WKJ-zQ-8R6" firstAttribute="leading" secondItem="zxA-BK-d42" secondAttribute="leading" id="Aod-23-UKH"/>
-                    <!-- Leading of Street 1 is connected to super view -->
                     <constraint firstItem="o5S-WV-gmI" firstAttribute="leading" secondItem="WPE-jg-X35" secondAttribute="leadingMargin" constant="10" id="Azs-EM-5Pr"/>
-                    <!-- Street 2 and PO Box have a leading of Street 1 -->
-                    <constraint firstItem="eR5-P1-6WY" firstAttribute="leading" secondItem="o5S-WV-gmI" secondAttribute="leading" id="z3p-0N-dWc"/>
-                    <constraint firstItem="G9x-mK-J3Q" firstAttribute="leading" secondItem="o5S-WV-gmI" secondAttribute="leading" id="jK0-5j-DmL"/>
-
                     <constraint firstItem="WKJ-zQ-8R6" firstAttribute="top" secondItem="Wb4-F5-tW5" secondAttribute="bottom" id="C9Z-ni-hbg"/>
                     <constraint firstItem="Wb4-F5-tW5" firstAttribute="leading" secondItem="DdI-zm-cRt" secondAttribute="trailing" constant="10" id="HtK-0d-d5M"/>
                     <constraint firstItem="Wb4-F5-tW5" firstAttribute="height" secondItem="DdI-zm-cRt" secondAttribute="height" id="Iir-j8-rhE"/>
                     <constraint firstItem="Wb4-F5-tW5" firstAttribute="baseline" secondItem="DdI-zm-cRt" secondAttribute="baseline" id="Jml-yT-60Z"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Wb4-F5-tW5" secondAttribute="trailing" id="Km3-mq-aPx"/>
-                    <!-- City has a trailing of street1 -->
                     <constraint firstItem="Wb4-F5-tW5" firstAttribute="trailing" secondItem="o5S-WV-gmI" secondAttribute="trailing" id="M2X-vX-kJi"/>
-                    <!-- Street 2 and PO Box have a trailing of Street 1 -->
-                    <constraint firstItem="eR5-P1-6WY" firstAttribute="trailing" secondItem="o5S-WV-gmI" secondAttribute="trailing" id="4Gn-b0-zIT"/>
-                    <constraint firstItem="G9x-mK-J3Q" firstAttribute="trailing" secondItem="o5S-WV-gmI" secondAttribute="trailing" id="9DS-Jm-4DC"/>
-                    
                     <constraint firstItem="Wb4-F5-tW5" firstAttribute="trailing" secondItem="pdn-aV-W4Q" secondAttribute="trailing" id="PJ8-45-ui0"/>
                     <constraint firstItem="DdI-zm-cRt" firstAttribute="trailing" secondItem="Lu6-hl-9pm" secondAttribute="trailing" id="PQD-gP-1hl"/>
                     <constraint firstAttribute="bottomMargin" secondItem="pdn-aV-W4Q" secondAttribute="bottom" id="duk-kE-Q1B"/>
                     <constraint firstItem="Wb4-F5-tW5" firstAttribute="leading" secondItem="pdn-aV-W4Q" secondAttribute="leading" id="kGf-7m-VRp"/>
-                    <!-- state has a height of street1 -->
                     <constraint firstItem="Lu6-hl-9pm" firstAttribute="height" secondItem="o5S-WV-gmI" secondAttribute="height" id="kPl-j6-9Di"/>
-                    <!-- Street 2 and PO Box have a height of Street 1 -->
-                    <constraint firstItem="eR5-P1-6WY" firstAttribute="height" secondItem="o5S-WV-gmI" secondAttribute="height" id="3Dz-4n-BIL"/>
-                    <constraint firstItem="G9x-mK-J3Q" firstAttribute="height" secondItem="o5S-WV-gmI" secondAttribute="height" id="5lM-dz-fod"/>
-                    
-                    
                     <constraint firstItem="DdI-zm-cRt" firstAttribute="height" secondItem="Lu6-hl-9pm" secondAttribute="height" id="kfN-fm-NE8"/>
                     <constraint firstItem="WKJ-zQ-8R6" firstAttribute="trailing" secondItem="zxA-BK-d42" secondAttribute="trailing" id="lNp-rP-8EN"/>
                     <constraint firstItem="pdn-aV-W4Q" firstAttribute="top" secondItem="WKJ-zQ-8R6" secondAttribute="bottom" id="lWs-vF-VD5"/>
                     <constraint firstAttribute="trailing" secondItem="zxA-BK-d42" secondAttribute="trailing" id="omM-qO-r0i"/>
-                    <!-- state has a leading of street1 -->
                     <constraint firstItem="Lu6-hl-9pm" firstAttribute="leading" secondItem="o5S-WV-gmI" secondAttribute="leading" id="r5j-iN-Cwo"/>
-                    
                     <constraint firstItem="Lu6-hl-9pm" firstAttribute="baseline" secondItem="pdn-aV-W4Q" secondAttribute="baseline" id="t3z-eq-Rzb"/>
                     <constraint firstItem="DdI-zm-cRt" firstAttribute="leading" secondItem="Lu6-hl-9pm" secondAttribute="leading" id="xHp-MN-w6B"/>
                     <constraint firstItem="DdI-zm-cRt" firstAttribute="top" secondItem="zxA-BK-d42" secondAttribute="bottom" id="zEH-0P-Xzz"/>
@@ -132,8 +94,6 @@
                 <outlet property="secondSeparatorView" destination="WKJ-zQ-8R6" id="r1V-za-UIl"/>
                 <outlet property="stateTextField" destination="Lu6-hl-9pm" id="7VA-3s-X5L"/>
                 <outlet property="street1TextField" destination="o5S-WV-gmI" id="FNV-0A-ukI"/>
-                <outlet property="street2TextField" destination="eR5-P1-6WY" id="LNT-K9-jaI"/>
-                <outlet property="poboxTextField" destination="G9x-mK-J3Q" id="QPZ-4E-iuM"/>
             </connections>
             <point key="canvasLocation" x="57.5" y="-372"/>
         </tableViewCell>
